@@ -1,1 +1,6 @@
-# NLP-WS23-24
+Group members:
+- Yernar Kubegenov
+- Alexander Prisak
+- Kilian Hümmer
+- Mykhailo Druhov
+
