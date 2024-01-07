@@ -37,7 +37,7 @@ if response.status_code == 200:
         replies = []
         for item in all_elements:
             messages = [
-                {"role": "system", "content": "You are an assistant that helps to define possible audiance request for given joke. You receive a joke from me and should guess suitable request from audience for this joke. What would the audience request for a specific joke look like? Compose the request in form request:request_text"},
+                {"role": "system", "content": "You are an assistant that helps to define possible audience request for given joke. You receive a joke from me and should guess suitable request from audience for this joke. What would the audience request for a specific joke look like? Compose the request in form request:request_text"},
                 {"role": "user", "content": item}
             ]
         
