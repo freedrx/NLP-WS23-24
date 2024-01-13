@@ -6,14 +6,18 @@ import random
 import pandas as pd
 
 class DadJokesMarkovChain:
-    def __init__(self):
-        self.markov_chain = None
+    def __init__(self, mc_filename: str = None):
+        self.markov_chain = None if mc_filename is None else self.load_chain(filename=mc_filename)
     
-    def train_chain(self, path: str):
+    def train_chain(self, path: str, column_to_read: str):
         if path[-4:] != '.csv':
             raise ValueError('Expected csv format.')
         df = pd.read_csv(path)
-        text_corpus = ' '.join(df['joke'].dropna().astype(str))
+        
+        if column_to_read not in df.columns:
+            raise ValueError('False column name provided.')
+        text_corpus = ' '.join(df[column_to_read].dropna().astype(str))
+
         self.markov_chain = markovify.Text(text_corpus)
     
     def generate_prefix_for_gpt2(self):
@@ -48,6 +52,7 @@ class DadJokesMarkovChain:
             action_type='rb'  
         )
     
+    @classmethod
     def _manipulate_chain(cls, filename: str, action_type: str, markov_chain: markovify.text.Text = None):
         if filename[-4:] != '.pkl':
             raise ValueError('Expected pkl format.')
