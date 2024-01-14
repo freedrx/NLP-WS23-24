@@ -1,5 +1,7 @@
 import gpt_2_simple as gpt2
 
+# The script is responsible for training process of gpt2 simple model
+
 gpt2.download_gpt2(model_name="124M")
 file_name = "./chatbot/cleaned_dataset.csv"
 
