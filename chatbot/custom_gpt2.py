@@ -13,19 +13,16 @@ from datetime import datetime
 
 class DadJokesGPT:
     def __init__(self, model_type: str = None, model_path: str = None, tokenizer_path: str = None):
-        if (model_type is None) and (model_path is None) and (tokenizer_path is None):
-            raise ValueError(
-                'You should either provide a path to existing model' \
-                ' or load the pretrained one using model type.'
-            )
+        if model_type is None:
+            if any([component is None for component in [model_path, tokenizer_path]]):
+                raise ValueError(
+                    'Both tokenizer path and model path should be specified when model type not provided.'
+                )
         if (model_type is not None) and (model_path is not None) and (tokenizer_path is not None):
             raise ValueError(
                 'It is not possible to load both pretrained and local model simultaniously.'
             )
-        if any([component is None for component in [model_path, tokenizer_path]]):
-            raise ValueError(
-                'Both tokenizer path and model path should be specified.'
-            )
+        
         self.dataloader = None
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -52,7 +49,11 @@ class DadJokesGPT:
 
     def _init_using_local_components(self, model_path: str, tokenizer_path: str):
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
-        self.gpt2 = AutoModelForCausalLM.from_pretrained(model_path).to(self.device)
+        state_dict_model = torch.load(model_path, map_location=torch.device('cpu'))
+        self.gpt2 = AutoModelForCausalLM.from_pretrained('gpt2-medium').to(self.device)
+        self.gpt2.resize_token_embeddings(len(self.tokenizer))
+        self.gpt2.load_state_dict(state_dict_model)
+
 
     def generate(self, text: str = '', max_length_of_generated_text: int = 32, num_return_sequences: int = 1):
         if any(value <= 0 for value in [max_length_of_generated_text, num_return_sequences]):

@@ -3,12 +3,11 @@ from custom_gpt2 import DadJokesGPT
 
 class DadJokesPipeline:
     def __init__(self, **kwargs):
-        mc_filename: str = kwargs.get('mc_filename', None)  
+        mc_fullpath: str = kwargs.get('mc_fullpath', None)  
         model_type: str = kwargs.get('model_type', None)
         model_path: str = kwargs.get('model_path', None)
         tokenizer_path: str = kwargs.get('tokenizer_path', None) 
-
-        self.markov_chain = DadJokesMarkovChain(mc_filename=mc_filename)
+        self.markov_chain = DadJokesMarkovChain(mc_fullpath=mc_fullpath)
         self.transformer = DadJokesGPT(
             model_type=model_type, 
             model_path=model_path, 
@@ -22,7 +21,7 @@ class DadJokesPipeline:
         self.transformer.train_model()
 
     def save_pipeline(self, directory: str):
-        self.markov_chain.dump_chain(directory + 'chain.pkl')
+        self.markov_chain.dump_chain(directory, 'chain.pkl')
         self.transformer.save_model(directory, 'gpt2')
         self.transformer.save_tokenizer(directory)
 
@@ -32,7 +31,3 @@ class DadJokesPipeline:
 
         return joke
 
-# model_name = "gpt2-medium"
-
-
-# data_path = './chatbot/cleaned_dataset.csv'

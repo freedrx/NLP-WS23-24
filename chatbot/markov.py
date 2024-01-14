@@ -6,8 +6,11 @@ import random
 import pandas as pd
 
 class DadJokesMarkovChain:
-    def __init__(self, mc_filename: str = None):
-        self.markov_chain = None if mc_filename is None else self.load_chain(filename=mc_filename)
+    def __init__(self, mc_fullpath: str = None):
+        if mc_fullpath:
+            self.load_chain(filename_with_path=mc_fullpath)
+        else:
+            self.markov_chain = None
     
     def train_chain(self, path: str, column_to_read: str):
         if path[-4:] != '.csv':
@@ -37,32 +40,33 @@ class DadJokesMarkovChain:
         
         return ' '.join(retrieved_first_words) 
 
-    def dump_chain(self, filename: str):
+    def dump_chain(self, directory: str, filename: str):
         if self.markov_chain is None:
             raise ValueError('Currently you don\'t have any active Markov chain.')
         self._manipulate_chain(
-            filename=filename,
+            filename_with_path=directory+filename,
             markov_chain=self.markov_chain,
             action_type='wb'
         )
     
-    def load_chain(self, filename: str):
+    def load_chain(self, filename_with_path: str):
         self.markov_chain = self._manipulate_chain(
-            filename=filename,
+            filename_with_path = filename_with_path,
             action_type='rb'  
         )
     
     @classmethod
-    def _manipulate_chain(cls, filename: str, action_type: str, markov_chain: markovify.text.Text = None):
-        if filename[-4:] != '.pkl':
+    def _manipulate_chain(cls, filename_with_path: str, action_type: str, markov_chain: markovify.text.Text = None):
+        if filename_with_path[-4:] != '.pkl':
             raise ValueError('Expected pkl format.')
         if action_type not in ['rb', 'wb']:
             raise ValueError('Incorrect action type is provided')
         if action_type == 'wb' and markov_chain is None:
             raise ValueError('For dumping procedure a Markov chain object is required')
-        with open(filename, action_type) as file:
+        with open(filename_with_path, action_type) as file:
             if action_type == 'wb':
                 pickle.dump(markov_chain, file)
                 return
             else:
-                return pickle.load(file)
+                chain = pickle.load(file)
+                return chain 

@@ -4,14 +4,27 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import Application, Updater, CommandHandler, MessageHandler, CallbackContext, CallbackQueryHandler, filters
 
 import random
-from random import randint
 import datetime
-import requests
-import configparser
+
 from openai import OpenAI
+
+from pipeline import DadJokesPipeline
+from simple_gpt2 import GPT2Simple
+
 
 OPENAI_TOKEN = 'YOUR_TOKEN'
 client = OpenAI(api_key=OPENAI_TOKEN) 
+
+custom_gpt2_pipeline = DadJokesPipeline(
+    model_path='./chatbot/custom/15kgpt2',
+    tokenizer_path='./chatbot/custom/tokenizer_gpt2',
+    mc_fullpath='./chatbot/custom/chain.pkl'
+)
+
+simple_gpt2 = GPT2Simple(
+    checkpoint_dir='./chatbot/checkpoint',
+    run_name='dadjokes'
+)
 
 # config = configparser.ConfigParser()
 # config.read('config.ini')
@@ -39,27 +52,22 @@ async def handle_message(update: Update, context: CallbackContext):
     
     print(f'User ({update.message.chat.id}) triggered a handler for {message_type}: {message}')
 
-    options = ['Chat GPT', 'Custom BART']
-    # selected = random.choice(options)
-    selected = options[0]
+    options = ['Chat GPT', 'GPT2 Custom', 'GPT2 Simple']
+    random_option = random.choice(options)
     if message_type == 'group':
         if BOT_USERNAME in message:
             new_message: str = message.replace(BOT_USERNAME, '')
-            response = make_inference(new_message, selected)   
+            response = make_inference(new_message, random_option)   
         else:
             return
     else:
-        response = make_inference(message, selected)  
+        response = make_inference(message, random_option)  
     print(f'Bot: {response}')
 
-    keyboard = [
-        [InlineKeyboardButton("{}".format(options[0]), callback_data=str(options[0]))],
-        [InlineKeyboardButton("{}".format(options[1]), callback_data=str(options[1]))]
-    ] if bool(random.getrandbits(1)) else [
-        [InlineKeyboardButton("{}".format(options[1]), callback_data=str(options[1]))],
-        [InlineKeyboardButton("{}".format(options[0]), callback_data=str(options[0]))]
-    ]
-    context.user_data['correct_answer'] = selected
+    keyboard = [[InlineKeyboardButton("{}".format(option), callback_data=str(options))] for option in options]
+    random.shuffle(keyboard)
+
+    context.user_data['correct_answer'] = random_option
     await update.message.reply_text(response, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode='html')  
 
 def make_inference(text, selected_option):
@@ -73,8 +81,11 @@ def make_inference(text, selected_option):
         chat = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
         reply = chat.choices[0].message.content
         return reply
+    elif selected_option == 'GPT2 Custom':
+        jokes_list = custom_gpt2_pipeline.generate_joke()
+        return jokes_list[0]
     else:
-        return ''
+        return simple_gpt2.generate()
 
 async def button(update: Update, context: CallbackContext) -> None:
     query = update.callback_query
