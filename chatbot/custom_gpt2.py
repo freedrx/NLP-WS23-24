@@ -7,6 +7,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, GPT2TokenizerFast,
 import tqdm
 
 from dataset import DadJokesDataset
+from utils import extract_substring
 
 from datetime import datetime
 
@@ -49,13 +50,14 @@ class DadJokesGPT:
 
     def _init_using_local_components(self, model_path: str, tokenizer_path: str):
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
-        state_dict_model = torch.load(model_path, map_location=torch.device('cpu'))
-        self.gpt2 = AutoModelForCausalLM.from_pretrained('gpt2-medium').to(self.device)
-        self.gpt2.resize_token_embeddings(len(self.tokenizer))
-        self.gpt2.load_state_dict(state_dict_model)
+        self.gpt2 = AutoModelForCausalLM.from_pretrained(model_path).to(self.device)
+        # state_dict_model = torch.load(model_path, map_location=torch.device('cpu'))
+        # self.gpt2 = AutoModelForCausalLM.from_pretrained('gpt2-medium').to(self.device)
+        # self.gpt2.resize_token_embeddings(len(self.tokenizer))
+        # self.gpt2.load_state_dict(state_dict_model)
 
 
-    def generate(self, text: str = '', max_length_of_generated_text: int = 32, num_return_sequences: int = 1):
+    def generate(self, text: str = '', max_length_of_generated_text: int = 64, num_return_sequences: int = 1):
         if any(value <= 0 for value in [max_length_of_generated_text, num_return_sequences]):
             raise ValueError('Maximal length and number of return sequences must be a positive integer.')
         
@@ -71,9 +73,11 @@ class DadJokesGPT:
             num_return_sequences = num_return_sequences)
         
         generated_sequences = [
-            self.tokenizer.decode(encoded_sequence)
-            .replace('<startofstring>', '')
-            .replace('<endofstring>', '') 
+            extract_substring(
+                self.tokenizer.decode(encoded_sequence),
+                "<startofstring>", 
+                "<endofstring>"
+            )
             for encoded_sequence in out
         ]
 
@@ -119,7 +123,7 @@ class DadJokesGPT:
         self.dataloader = DataLoader(DadJokesDataset(data_path, column_to_read, self.tokenizer), batch_size=batch_size)
     
     def save_model(self, directory: str, filename: str):
-        torch.save(self.gpt2.state_dict(), f"{directory}/{filename}.pt")
+        self.gpt2.save_pretrained(f"{directory}/gpt2_model")
     
     def save_tokenizer(self, directory: str):
         self.tokenizer.save_pretrained(f'{directory}/tokenizer_gpt2')

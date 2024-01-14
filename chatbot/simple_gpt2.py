@@ -1,5 +1,6 @@
 import gpt_2_simple as gpt2
 
+from utils import extract_substring
 
 class GPT2Simple:
     def __init__(self, checkpoint_dir: str, run_name: str):
@@ -20,17 +21,4 @@ class GPT2Simple:
             return_as_list=True
         )[0]
 
-        return self.extract_substring(out)
-
-    @classmethod
-    def extract_substring(cls, text):
-        start_marker = "<|startoftext|>"
-        end_marker = "<|endoftext|>"
-        start_index = text.find(start_marker)
-        end_index = text.find(end_marker, start_index + len(start_marker))
-
-        if start_index != -1 and end_index != -1:
-            return text[start_index + len(start_marker):end_index]
-        else:
-            return text
-
+        return extract_substring(out, "<|startoftext|>", "<|endoftext|>")

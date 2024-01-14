@@ -26,7 +26,7 @@ class DadJokesMarkovChain:
     def generate_prefix_for_gpt2(self):
         if self.markov_chain is None:
             raise ValueError('Before generation you should either load or train a Markov chain.')
-        possible_prefix_length = [3, 4, 5]
+        possible_prefix_length = [0, 1, 2]
         generated_words = None
 
         while(True):
@@ -34,11 +34,12 @@ class DadJokesMarkovChain:
             if out is not None:
                 generated_words = out.split()
                 break
-        
         selected_prefix_length = random.choice(possible_prefix_length)
-        retrieved_first_words = generated_words[:selected_prefix_length] if len(generated_words) >= selected_prefix_length else generated_words
-        
-        return ' '.join(retrieved_first_words) 
+        if selected_prefix_length > 0:
+            retrieved_first_words = generated_words[:selected_prefix_length] if len(generated_words) >= selected_prefix_length else generated_words
+            return ' '.join(retrieved_first_words) 
+        else:
+            return ''
 
     def dump_chain(self, directory: str, filename: str):
         if self.markov_chain is None:
