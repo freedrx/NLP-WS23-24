@@ -16,7 +16,7 @@ OPENAI_TOKEN = 'YOUR_TOKEN'
 client = OpenAI(api_key=OPENAI_TOKEN) 
 
 custom_gpt2_pipeline = DadJokesPipeline(
-    model_path='./chatbot/custom/15kgpt2',
+    model_path='./chatbot/custom/gpt2_model',
     tokenizer_path='./chatbot/custom/tokenizer_gpt2',
     mc_fullpath='./chatbot/custom/chain.pkl'
 )
@@ -46,7 +46,7 @@ async def help(update: Update, context: CallbackContext) -> None:
     text = 'Enter a message that contains request for dad joke and I do the rest!\nYour joke should be provided in a format "Tell/make a joke about {topic name}"' 
     await update.message.reply_text(text, parse_mode="HTML")
 
-async def handle_message(update: Update, context: CallbackContext):
+async def joke(update: Update, context: CallbackContext):
     message_type: str = update.message.chat.type
     message: str = update.message.text
     
@@ -54,14 +54,8 @@ async def handle_message(update: Update, context: CallbackContext):
 
     options = ['Chat GPT', 'GPT2 Custom', 'GPT2 Simple']
     random_option = random.choice(options)
-    if message_type == 'group':
-        if BOT_USERNAME in message:
-            new_message: str = message.replace(BOT_USERNAME, '')
-            response = make_inference(new_message, random_option)   
-        else:
-            return
-    else:
-        response = make_inference(message, random_option)  
+
+    response = make_inference(random_option)  
     print(f'Bot: {response}')
 
     keyboard = [[InlineKeyboardButton("{}".format(option), callback_data=str(options))] for option in options]
@@ -70,12 +64,12 @@ async def handle_message(update: Update, context: CallbackContext):
     context.user_data['correct_answer'] = random_option
     await update.message.reply_text(response, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode='html')  
 
-def make_inference(text, selected_option):
+def make_inference(selected_option):
 
     if selected_option == 'Chat GPT':
         messages = [
-            {"role": "system", "content": "You are a comedian that receives request from audience and should generate a joke for it."},
-            {"role": "user", "content": text}
+            {"role": "system", "content": "You are a comedian that generates bad jokes."},
+            {"role": "user", "content": "Provide a dadjoke"}
         ]
     
         chat = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
@@ -105,7 +99,7 @@ def main() -> None:
     app.add_handler(CommandHandler('start', start))
     app.add_handler(CommandHandler('help', help))
     app.add_handler(CommandHandler('time', time))
-    app.add_handler(MessageHandler(filters.TEXT, handle_message))
+    app.add_handler(CommandHandler('joke', joke))
     app.add_handler(CallbackQueryHandler(button))
 
     app.run_polling(poll_interval=3)
