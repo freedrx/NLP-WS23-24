@@ -4,6 +4,7 @@ from transformers import GPT2TokenizerFast
 
 import pandas as pd
 
+# Pytorch dataset for given dad jokes dataset
 class DadJokesDataset(Dataset):
     def __init__(self, path:str, column_to_read: str, tokenizer: GPT2TokenizerFast):
         data = pd.read_csv(path)

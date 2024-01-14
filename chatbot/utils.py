@@ -1,3 +1,5 @@
+# The file contains util functions for gpt2 models
+
 def extract_substring(text: str, start_marker: str, end_marker: str):
     start_index = text.find(start_marker)
     if start_index != -1:
