@@ -155,7 +155,70 @@ class DadJokesCleaner:
             "abduct", "kidnap", "suicidal", "bomb", "gun",
             "anarchist", "bloodshed", "exploit", "intolerance",
             "kidnapping", "cultist", "sabotage", "sedition",
-            "slander", "stalking", "terrorism", "torture", "violator", "niga", "niger", "nigger"
+            "slander", "stalking", "terrorism", "torture", "violator", "niga", "niger", "nigger",
+            "Uyghur", "muslim", "Jew", "Jewish", "butthole", "ass", "clit", "cum", "cunt", "ejaculate", 
+            "fuck", "fist", 'jews', 'muslims', 'antisemitic', 'islamophobic', 'holocaust', 'stereotype', 'denial', 'muhammad', 'prophet',
+            'bigotry', 'discrimination', 'intolerance', 'prejudice', 'xenophobia', 'hate speech', 'racial slur', 'hateful',
+            'racial profiling', 'racial bias', 'ethnocentrism', 'ethnic slurs', 'religious discrimination', 'religious bias',
+            'holy war', 'infidel', 'kafir', 'jihad', 'fatwa', 'blasphemy', 'apostasy', 'sharia', 'hijab', 'burqa',
+            'racial hatred', 'ethnic hatred', 'religious hatred', 'profanity', 'curse words', 'offensive language', 'vulgar',
+            'derogatory', 'offensive', 'insult', 'hateful speech', 'stigmatize', 'demonize', 'scapegoat', 'pariah', 'outcast',
+            'atrocity', 'genocide', 'ethnic cleansing', 'racist', 'religious persecution', 'holy cow', 'infidel', 'kike',
+            'raghead', 'camel jockey', 'jihadist', 'terrorist', 'fundamentalist', 'radical', 'extremist', 'fanatic', 'martyr',
+            'suicide bomber', 'blood libel', 'pogrom', 'ghetto', 'ghettoize', 'zionist', 'caliphate', 'dhimmi', 'fatwa',
+            'hijacker', 'hijacking', 'mullah', 'shahid', 'jewry', 'judaism', 'zionism', 'imam', 'mosque', 'minaret',
+            'synagogue', 'yarmulke', 'kosher', 'halal', 'mecca', 'medina', 'ramadan', 'hajj', 'shofar', 'sabbath', 'kosher',
+            'hasidic', 'sephardic', 'ashkenazi', 'sunni', 'shiite', 'sufi', 'halal', 'salaam', 'ummah', 'hijra', 'zakat',
+            'haram', 'halal', 'shahada', 'ummah', 'hijra', 'ayatollah', 'sunna', 'hadith', 'taqiyya', 'jizya', 'kuffar',
+            'dar al-harb', 'dar al-islam', 'shirk', 'dhimmitude', 'jahannam', 'qibla', 'salat', 'sawm', 'zakat', 'hajj',
+            'ramadan', 'musalla', 'dawah', 'ummah', 'mujahideen', 'fatwa', 'hijab', 'burqa', 'niqab', 'kafir', 'jizya',
+            'ghazi', 'ummah', 'tawhid', 'shahada', 'jahiliyyah', 'bida', 'fitna', 'fiqh', 'quran', 'hadith', 'sunni', 'shiite',
+            'sufi', 'salafist', 'kharijite', 'islamic state', 'sharia law', 'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa',
+            'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi',
+            'blasphemy', 'apostasy', 'islamism', 'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya',
+            'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra', 'ummah', 'jihad',
+            'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization', 'jihadist',
+            'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni',
+            'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy',
+            'islamism', 'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya',
+            'dhimmi', 'fatwa', 'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel',
+            'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization', 'jihadist', 'terrorism', 'martyrdom',
+            'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra',
+            'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization',
+            'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal',
+            'sunni', 'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy',
+            'apostasy', 'islamism', 'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud',
+            'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom',
+            'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization', 'jihadist', 'terrorism',
+            'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni', 'shiite',
+            'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism',
+            'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi',
+            'fatwa', 'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir',
+            'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate',
+            'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra', 'ummah',
+            'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization', 'jihadist',
+            'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni',
+            'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy',
+            'islamism', 'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya',
+            'dhimmi', 'fatwa', 'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel',
+            'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization', 'jihadist', 'terrorism', 'martyrdom',
+            'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra',
+            'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization',
+            'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal',
+            'sunni', 'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy',
+            'apostasy', 'islamism', 'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud',
+            'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom',
+            'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization', 'jihadist', 'terrorism',
+            'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni', 'shiite',
+            'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism',
+            'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi',
+            'fatwa', 'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir',
+            'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate',
+            'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni', 'shiite', 'sufi', 'hijra', 'ummah',
+            'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization', 'jihadist',
+            'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni',
+            'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy',
+            'islamism', 'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya'        
         }
 
         # Create a regular expression pattern for filtering
@@ -164,9 +227,9 @@ class DadJokesCleaner:
 
         # Use boolean indexing to filter out rows containing offensive content
         df = df[~df['joke'].str.contains(pattern, case=False, regex=True)]
-        df = df[~df['joke'].str.contains(pattern2, case=False, regex=True)]    
+        df = df[~df['joke'].str.contains(pattern2, case=False, regex=True)]   
 
-                  
+                         
 
         df.to_csv('cleaned_dataset.csv', index=False) # save cleaned dataset
 
