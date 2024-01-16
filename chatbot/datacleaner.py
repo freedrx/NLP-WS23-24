@@ -218,7 +218,7 @@ class DadJokesCleaner:
             'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy', 'islamism', 'radicalization', 'jihadist',
             'terrorism', 'martyrdom', 'caliphate', 'jizya', 'hudud', 'taqiyya', 'dhimmi', 'fatwa', 'haram', 'halal', 'sunni',
             'shiite', 'sufi', 'hijra', 'ummah', 'jihad', 'martyrdom', 'infidel', 'kafir', 'dhimmi', 'blasphemy', 'apostasy',
-            'islamism', 'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya'        
+            'islam', 'radicalization', 'jihadist', 'terrorism', 'martyrdom', 'caliphate', 'jizya', "tit", "boob", "jugs", "hook",      
         }
 
         # Create a regular expression pattern for filtering
@@ -229,9 +229,8 @@ class DadJokesCleaner:
         df = df[~df['joke'].str.contains(pattern, case=False, regex=True)]
         df = df[~df['joke'].str.contains(pattern2, case=False, regex=True)]   
 
-                         
-
-        df.to_csv('cleaned_dataset.csv', index=False) # save cleaned dataset
+        #save dataset
+        df.to_csv('cleaned_dataset.csv', index=False) 
 
 
 #Execute the code
