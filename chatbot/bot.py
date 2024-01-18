@@ -26,11 +26,6 @@ simple_gpt2 = GPT2Simple(
     run_name='dadjokes'
 )
 
-# config = configparser.ConfigParser()
-# config.read('config.ini')
-
-# BOT_TOKEN = config.get('default', 'BOT_TOKEN')
-# weather_key = config.get('default', 'weather_key')
 BOT_TOKEN: Final = 'YOUR TOKEN'
 BOT_USERNAME: Final = '@thws23maibot'
 async def start(update: Update, context: CallbackContext) -> None:
