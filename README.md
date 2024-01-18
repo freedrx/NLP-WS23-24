@@ -4,3 +4,4 @@ Group members:
 - Kilian Hümmer
 - Mykhailo Druhov
 
+Link to the chatbot models: https://cloud.thws.de/s/4sQyPb7ERs265Qg

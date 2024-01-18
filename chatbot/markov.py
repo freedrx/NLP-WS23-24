@@ -58,7 +58,7 @@ class DadJokesMarkovChain:
         if self.markov_chain is None:
             raise ValueError('Currently you don\'t have any active Markov chain.')
         self._manipulate_chain(
-            filename_with_path=directory+filename,
+            filename_with_path=directory + '/' + filename,
             markov_chain=self.markov_chain,
             action_type='wb'
         )
