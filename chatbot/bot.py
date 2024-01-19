@@ -11,23 +11,34 @@ from openai import OpenAI
 from pipeline import DadJokesPipeline
 from simple_gpt2 import GPT2Simple
 
-
+# !!! Provide an OpenAI API Token 
 OPENAI_TOKEN = 'YOUR_TOKEN'
 client = OpenAI(api_key=OPENAI_TOKEN) 
 
+# !!! After unzipping cloud.thws models you should specify paths to them
+# for DadJokesPipeline and GPT2Simple
+
+# Having unzipped custom directory, specify paths of pipeline components
 custom_gpt2_pipeline = DadJokesPipeline(
     model_path='./chatbot/custom/gpt2_model',
     tokenizer_path='./chatbot/custom/tokenizer_gpt2',
     mc_fullpath='./chatbot/custom/chain.pkl'
 )
 
+# Here you should specify checkpoint dir path only, run_name is name of its subdirectory 
+# where model and configs are located
 simple_gpt2 = GPT2Simple(
     checkpoint_dir='./chatbot/checkpoint',
     run_name='dadjokes'
 )
 
+# Specify bot token, you've received it via email
 BOT_TOKEN: Final = 'YOUR TOKEN'
+
+# Name of bot
 BOT_USERNAME: Final = '@thws23maibot'
+
+# Method sends text after starting a chat
 async def start(update: Update, context: CallbackContext) -> None:
     text = "Hello there! I'm not Obi-Wan Kenobi, but I will guide you in the world " \
         "full of stupidest jokes You can imagine. I hope You'll enjoy this journey and " \
@@ -39,28 +50,34 @@ async def start(update: Update, context: CallbackContext) -> None:
     
     await update.message.reply_text(text, parse_mode="HTML")
 
+# Method represents /help method
 async def help(update: Update, context: CallbackContext) -> None:
     text = 'Call "/joke" command to let me generate a joke for You!' 
     await update.message.reply_text(text, parse_mode="HTML")
 
+# Method is responsible for joke handling
 async def joke(update: Update, context: CallbackContext):
-    
+    # multiple calls of this method are disabled
     if context.user_data.get('active_thread', False):
         await update.message.reply_text("Multiple calls are not allowed", parse_mode='html')
     else:
-        context.user_data['active_thread'] = True
-        message: str = update.message.text
-        
-        print(f'User ({update.message.chat.id}) triggered a handler: {message}')
+        context.user_data['active_thread'] = True  
+        print(f'User ({update.message.chat.id}) triggered a handler')
 
+        # Models available
         options = ['Chat GPT', 'GPT2 Custom', 'GPT2 Simple']
         random_option = random.choice(options)
         print(random_option)
+
+        # Provisional message is shown
         progress_message = await update.message.reply_text("In progress...", parse_mode='html')  
         joke = make_inference(random_option) 
+        
+        # In case of faulty response tag brackets will be removed from a message
         joke = joke.replace('<', '').replace('>', '') 
         print(f'Bot: {joke}')
 
+        # Three buttons are shown 
         keyboard = [[InlineKeyboardButton("{}".format(option), callback_data=str(option))] for option in options]
         random.shuffle(keyboard)
 
@@ -69,13 +86,15 @@ async def joke(update: Update, context: CallbackContext):
 
         await progress_message.edit_text(joke, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode='html')  
 
+# Method is responsible for generating jokes
 def make_inference(selected_option):
     if selected_option == 'Chat GPT':
         messages = [
             {"role": "system", "content": "You are a comedian that generates bad jokes."},
             {"role": "user", "content": "Provide a dadjoke regarding random topic"}
         ]
-    
+
+        # ChatGPT call
         chat = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
         reply = chat.choices[0].message.content
 
@@ -85,11 +104,14 @@ def make_inference(selected_option):
         time.sleep(5)
         return reply
     elif selected_option == 'GPT2 Custom':
+        # Call of DadJokesPipeline
         jokes_list = custom_gpt2_pipeline.generate_joke()
         return jokes_list[0]
     else:
+        # SimpleGPT call
         return simple_gpt2.generate(max_length=64)
 
+# Callback function that is activated after choice is made
 async def button(update: Update, context: CallbackContext) -> None:
     query = update.callback_query
     choice = query.data
@@ -112,8 +134,6 @@ def main() -> None:
     app.add_handler(CallbackQueryHandler(button))
 
     app.run_polling(poll_interval=3)
-    # updater.idle()
-
 
 if __name__ == '__main__':
     print("Bot started")
