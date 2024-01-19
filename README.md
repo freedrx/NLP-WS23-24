@@ -4,6 +4,8 @@ Group members:
 - Kilian Hümmer
 - Mykhailo Druhov
 
+Our group members have made an even contribution for this portfolio.
+
 This repository contains portfolio for the course Semantic Data Processing and Representation
 and contains following items:
  - Presentation of GloVe
@@ -11,6 +13,7 @@ and contains following items:
  - Markovify example
  - Movie Classifier
  - Project (Telegram ChatBot)
+
 
 Description of the final project:
 
