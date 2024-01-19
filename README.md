@@ -21,7 +21,7 @@ Our group decided to implement Telegram Bot. The purpose of this bot is generati
 
 Setup:
 1. You have to download our finetuned Huggingface GPT2 and GPT2-Simple from THWS Cloud. Link: https://cloud.thws.de/s/4sQyPb7ERs265Qg
-2. After unzipping models You have to alter path to the models in bot.py file. ./custom folder contains Huggingface GPT2. checkpoint - GPT2 Simple (don't change run_name param in file).
+2. After unzipping models You have to alter path to the models in bot.py file. ./custom folder contains Huggingface GPT2 incl. custom Tokeniser + Markov Chain, checkpoint - GPT2 Simple (don't change run_name param in file).
 3. Execute the code of bot.py locally to start server side of the bot
 4. Find our bot in Telegram using its nickname @thws23maibot
 5. Enjoy
