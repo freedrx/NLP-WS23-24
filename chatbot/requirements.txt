@@ -1,0 +1,8 @@
+python-telegram-bot==20.7
+openai==1.6.1
+transformers==4.35.2
+gpt-2-simple==0.8.1
+markovify==0.9.4
+torch==2.0.1
+pandas==1.4.2
+tqdm==4.64.0
