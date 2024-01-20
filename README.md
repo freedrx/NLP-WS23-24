@@ -24,4 +24,5 @@ Setup:
 2. After unzipping models You have to alter path to the models in bot.py file. ./custom folder contains Huggingface GPT2 incl. custom Tokeniser + Markov Chain, checkpoint - GPT2 Simple (don't change run_name param in bot.py).
 3. Execute the code of bot.py locally to start server side of the bot
 4. Find our bot in Telegram using its nickname @thws23maibot
-5. Enjoy
+5. Read the commands in starting message of the bot
+6. Enjoy
